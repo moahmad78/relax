@@ -284,10 +284,24 @@ document.addEventListener('DOMContentLoaded', () => {
     unlockBodyScroll();
   }
 
+  // Open details on clicking Details button or tapping anywhere on the card
   viewDetailBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       const serviceKey = btn.getAttribute('data-service');
+      openServiceDetail(serviceKey);
+    });
+  });
+
+  // Clicking anywhere on a service card opens the Details modal
+  const allServiceCards = document.querySelectorAll('.service-card');
+  allServiceCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.book-service-direct-btn')) {
+        return;
+      }
+      const serviceKey = card.getAttribute('data-service-id') || card.getAttribute('data-service') || 'swedish';
       openServiceDetail(serviceKey);
     });
   });
