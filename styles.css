@@ -3788,27 +3788,40 @@ body.modal-open, html.modal-open {
 
   /* Final CTA on Mobile */
   .final-cta-card {
-    padding: 32px 18px;
+    padding: 28px 16px;
+    border-radius: var(--radius-lg);
   }
 
   .final-cta-title {
-    font-size: 1.55rem;
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  .final-cta-desc {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
   }
 
   .final-cta-buttons {
     display: flex !important;
-    flex-direction: row !important;
-    gap: 8px !important;
+    flex-direction: column !important;
+    gap: 10px !important;
     width: 100% !important;
+    max-width: 100% !important;
   }
 
   .final-cta-buttons .btn {
-    flex: 1 1 0 !important;
-    min-width: 0 !important;
-    min-height: 46px !important;
-    padding: 12px 8px !important;
-    font-size: 0.82rem !important;
-    gap: 4px !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 12px 18px !important;
+    font-size: 0.88rem !important;
+    white-space: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
   }
 
   /* Footer on Mobile */
