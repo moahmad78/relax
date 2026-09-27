@@ -143,7 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     navLinks.forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        // Do not close mobile drawer if clicking the Spa Sounds dropdown toggle button
+        if (link.id === 'spaSoundsDropdownToggle' || link.closest('#spaSoundsMenuItem')) {
+          return;
+        }
         mobileMenuBtn.classList.remove('active');
         navMenu.classList.remove('active');
       });
@@ -880,6 +884,299 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // ==========================================
+  // 9.1 MENU 5 SPA SOUNDS GENERATORS & CONTROLLER
+  // ==========================================
+  let activeMenuSoundId = null;
+  let menuAudioCtx = null;
+  let menuSoundCleanup = null;
+
+  const spaSoundsDropdownToggle = document.getElementById('spaSoundsDropdownToggle');
+  const spaSoundsMenuItem = document.getElementById('spaSoundsMenuItem');
+
+  if (spaSoundsDropdownToggle && spaSoundsMenuItem) {
+    spaSoundsDropdownToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      spaSoundsMenuItem.classList.toggle('mobile-open');
+      spaSoundsMenuItem.classList.toggle('active');
+    });
+  }
+
+  // Close dropdown when clicking outside on desktop/mobile
+  document.addEventListener('click', (e) => {
+    if (spaSoundsMenuItem && !spaSoundsMenuItem.contains(e.target)) {
+      spaSoundsMenuItem.classList.remove('mobile-open');
+      spaSoundsMenuItem.classList.remove('active');
+    }
+  });
+
+  function getMenuAudioContext() {
+    if (!menuAudioCtx || menuAudioCtx.state === 'closed') {
+      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+      menuAudioCtx = new AudioCtxClass();
+    }
+    if (menuAudioCtx.state === 'suspended') {
+      menuAudioCtx.resume();
+    }
+    return menuAudioCtx;
+  }
+
+  function stopCurrentMenuSound(notify = true) {
+    if (menuSoundCleanup) {
+      try { menuSoundCleanup(); } catch (err) {}
+      menuSoundCleanup = null;
+    }
+    if (menuAudioCtx && menuAudioCtx.state !== 'closed') {
+      try {
+        menuAudioCtx.close();
+      } catch (err) {}
+      menuAudioCtx = null;
+    }
+    const prevId = activeMenuSoundId;
+    activeMenuSoundId = null;
+
+    // Reset UI for all sound cards
+    document.querySelectorAll('.sound-item-card').forEach(card => {
+      card.classList.remove('is-playing');
+      const btn = card.querySelector('.sound-play-toggle-btn i');
+      if (btn) btn.className = 'fa-solid fa-play';
+    });
+
+    if (notify && prevId) {
+      showToast('Spa sound paused', 'info');
+    }
+  }
+
+  function playMenuSpaSound(soundId) {
+    // If clicking currently active sound, stop it (toggle pause)
+    if (activeMenuSoundId === soundId) {
+      stopCurrentMenuSound(true);
+      return;
+    }
+
+    // Stop any previously playing menu sound
+    stopCurrentMenuSound(false);
+
+    try {
+      const ctx = getMenuAudioContext();
+      const masterGain = ctx.createGain();
+      masterGain.gain.setValueAtTime(0.08, ctx.currentTime);
+      masterGain.connect(ctx.destination);
+
+      let cleanupFn = () => {};
+      let soundDisplayName = 'Spa Sound';
+
+      if (soundId === 'tibetan') {
+        soundDisplayName = 'Tibetan Singing Bowls';
+        // Multi-layered harmonic resonance (216Hz, 432Hz, 864Hz) + LFO vibrato + periodic brass strike
+        const freqs = [216, 432, 648, 864];
+        const oscs = freqs.map((f, idx) => {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, ctx.currentTime);
+          g.gain.setValueAtTime(0.04 / (idx + 1), ctx.currentTime);
+          osc.connect(g);
+          g.connect(masterGain);
+          osc.start();
+          return osc;
+        });
+
+        // Periodic bowl strike
+        const strikeInterval = setInterval(() => {
+          if (!menuAudioCtx) return;
+          const strikeOsc = ctx.createOscillator();
+          const strikeGain = ctx.createGain();
+          strikeOsc.type = 'sine';
+          strikeOsc.frequency.setValueAtTime(432, ctx.currentTime);
+          strikeGain.gain.setValueAtTime(0.001, ctx.currentTime);
+          strikeGain.gain.exponentialRampToValueAtTime(0.07, ctx.currentTime + 0.05);
+          strikeGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 3.8);
+          strikeOsc.connect(strikeGain);
+          strikeGain.connect(masterGain);
+          strikeOsc.start(ctx.currentTime);
+          strikeOsc.stop(ctx.currentTime + 3.9);
+        }, 4000);
+
+        cleanupFn = () => {
+          clearInterval(strikeInterval);
+          oscs.forEach(o => { try { o.stop(); } catch (e) {} });
+        };
+
+      } else if (soundId === 'stream') {
+        soundDisplayName = 'Rainforest & Soft Stream';
+        // Procedural bubbling water + soft rainforest drizzle
+        const bufferSize = ctx.sampleRate * 2;
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        let lastOut = 0.0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          output[i] = (lastOut + (0.02 * white)) / 1.02;
+          lastOut = output[i];
+          output[i] *= 3.5;
+        }
+
+        const whiteNoise = ctx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        const filter1 = ctx.createBiquadFilter();
+        filter1.type = 'bandpass';
+        filter1.frequency.setValueAtTime(520, ctx.currentTime);
+        filter1.Q.setValueAtTime(3.0, ctx.currentTime);
+
+        const filter2 = ctx.createBiquadFilter();
+        filter2.type = 'lowpass';
+        filter2.frequency.setValueAtTime(1400, ctx.currentTime);
+
+        // Water modulation LFO
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        lfo.frequency.setValueAtTime(0.7, ctx.currentTime);
+        lfoGain.gain.setValueAtTime(280, ctx.currentTime);
+        lfo.connect(lfoGain);
+        lfoGain.connect(filter1.frequency);
+
+        whiteNoise.connect(filter1);
+        filter1.connect(filter2);
+        filter2.connect(masterGain);
+
+        whiteNoise.start();
+        lfo.start();
+
+        cleanupFn = () => {
+          try { whiteNoise.stop(); lfo.stop(); } catch (e) {}
+        };
+
+      } else if (soundId === 'solfeggio') {
+        soundDisplayName = '528 Hz Miracle Tone';
+        // Deep warm Solfeggio relaxation drone (174Hz, 285Hz, 396Hz, 528Hz)
+        const solfeggioTones = [174, 285, 396, 528];
+        const oscs = solfeggioTones.map((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = i === 3 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gain.gain.setValueAtTime(i === 3 ? 0.05 : 0.02, ctx.currentTime);
+          osc.connect(gain);
+          gain.connect(masterGain);
+          osc.start();
+          return osc;
+        });
+
+        cleanupFn = () => {
+          oscs.forEach(o => { try { o.stop(); } catch (e) {} });
+        };
+
+      } else if (soundId === 'ocean') {
+        soundDisplayName = 'Ocean Waves & Breeze';
+        // Procedural rhythmic ocean surf with slow swell and recede
+        const bufferSize = ctx.sampleRate * 3;
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * 0.4;
+        }
+
+        const noise = ctx.createBufferSource();
+        noise.buffer = noiseBuffer;
+        noise.loop = true;
+
+        const waveFilter = ctx.createBiquadFilter();
+        waveFilter.type = 'lowpass';
+        waveFilter.frequency.setValueAtTime(280, ctx.currentTime);
+
+        const waveGain = ctx.createGain();
+        waveGain.gain.setValueAtTime(0.01, ctx.currentTime);
+
+        noise.connect(waveFilter);
+        waveFilter.connect(waveGain);
+        waveGain.connect(masterGain);
+        noise.start();
+
+        // Wave swell cycle (~7s period)
+        let waveTime = 0;
+        const waveInterval = setInterval(() => {
+          if (!menuAudioCtx) return;
+          waveTime += 0.1;
+          const cycle = (Math.sin(waveTime * 0.9) + 1) / 2; // 0 to 1
+          const targetGain = 0.01 + (cycle * 0.09);
+          const targetFreq = 180 + (cycle * 480);
+          waveGain.gain.linearRampToValueAtTime(targetGain, ctx.currentTime + 0.1);
+          waveFilter.frequency.linearRampToValueAtTime(targetFreq, ctx.currentTime + 0.1);
+        }, 100);
+
+        cleanupFn = () => {
+          clearInterval(waveInterval);
+          try { noise.stop(); } catch (e) {}
+        };
+
+      } else if (soundId === 'chimes') {
+        soundDisplayName = 'Zen Temple Wind Chimes';
+        // Pentatonic crystal wind chimes with FM bell synthesis
+        const pentatonicScale = [659.25, 783.99, 880, 987.77, 1174.66, 1318.51, 1567.98];
+        const chimeInterval = setInterval(() => {
+          if (!menuAudioCtx) return;
+          const carrier = ctx.createOscillator();
+          const modulator = ctx.createOscillator();
+          const modGain = ctx.createGain();
+          const noteGain = ctx.createGain();
+
+          const freq = pentatonicScale[Math.floor(Math.random() * pentatonicScale.length)];
+          carrier.frequency.setValueAtTime(freq, ctx.currentTime);
+          modulator.frequency.setValueAtTime(freq * 1.414, ctx.currentTime);
+
+          modGain.gain.setValueAtTime(150, ctx.currentTime);
+          modGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 2.8);
+
+          noteGain.gain.setValueAtTime(0.001, ctx.currentTime);
+          noteGain.gain.exponentialRampToValueAtTime(0.06, ctx.currentTime + 0.04);
+          noteGain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 3.4);
+
+          modulator.connect(modGain);
+          modGain.connect(carrier.frequency);
+          carrier.connect(noteGain);
+          noteGain.connect(masterGain);
+
+          carrier.start(ctx.currentTime);
+          modulator.start(ctx.currentTime);
+          carrier.stop(ctx.currentTime + 3.5);
+          modulator.stop(ctx.currentTime + 3.5);
+        }, 2200);
+
+        cleanupFn = () => {
+          clearInterval(chimeInterval);
+        };
+      }
+
+      menuSoundCleanup = cleanupFn;
+      activeMenuSoundId = soundId;
+
+      // Update UI for the active sound card
+      const targetCard = document.querySelector(`.sound-item-card[data-sound-id="${soundId}"]`);
+      if (targetCard) {
+        targetCard.classList.add('is-playing');
+        const icon = targetCard.querySelector('.sound-play-toggle-btn i');
+        if (icon) icon.className = 'fa-solid fa-pause';
+      }
+
+      showToast(`🎵 Now Playing: ${soundDisplayName}`, 'success');
+    } catch (err) {
+      console.warn('Menu spa sound error:', err);
+    }
+  }
+
+  // Bind click on play buttons and sound cards
+  document.querySelectorAll('.sound-item-card').forEach(card => {
+    const soundId = card.getAttribute('data-sound-id');
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      playMenuSpaSound(soundId);
+    });
+  });
 
   // ==========================================
   // 10. TOAST NOTIFICATION UTILITY
