@@ -1058,6 +1058,8 @@ h1, h2, h3, h4, h5, h6 {
 .featured-trust-card {
   border: 1.5px solid var(--color-gold-primary);
   background: linear-gradient(180deg, #ffffff 0%, #faf8f5 100%);
+  position: relative;
+  overflow: visible;
 }
 
 .featured-tag {
@@ -1070,8 +1072,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 3px 11px;
+  padding: 4px 12px;
   border-radius: var(--radius-full);
+  box-shadow: 0 4px 10px rgba(156, 130, 99, 0.35);
+  z-index: 10;
+  white-space: nowrap;
 }
 
 .trust-icon-box {
@@ -3446,7 +3451,7 @@ body.modal-open, html.modal-open {
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     gap: 16px !important;
-    padding: 6px 4px 22px !important;
+    padding: 16px 8px 24px !important;
     margin-bottom: 24px !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
@@ -3466,6 +3471,8 @@ body.modal-open, html.modal-open {
     display: flex !important;
     flex-direction: column !important;
     padding: 24px 18px !important;
+    position: relative !important;
+    overflow: visible !important;
   }
 
   .trust-stats-banner {
@@ -3616,7 +3623,7 @@ body.modal-open, html.modal-open {
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
     gap: 16px !important;
-    padding: 6px 4px 22px !important;
+    padding: 16px 8px 24px !important;
     margin-bottom: 24px !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
@@ -3636,6 +3643,8 @@ body.modal-open, html.modal-open {
     display: flex !important;
     flex-direction: column !important;
     padding: 24px 18px !important;
+    position: relative !important;
+    overflow: visible !important;
   }
 
   .how-bottom-callout {
