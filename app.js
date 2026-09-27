@@ -667,7 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const waMsg = encodeURIComponent(`Hello RELAX Wellness Concierge! My booking is confirmed. Ref: ${ref} for ${bookingState.therapyName} (${bookingState.duration} mins). Looking forward to the session!`);
     const waLink = document.getElementById('confirmWaChatLink');
     if (waLink) {
-      waLink.href = `https://wa.me/917090120211?text=${waMsg}`;
+      waLink.href = `https://wa.me/919264920211?text=${waMsg}`;
     }
 
     goToStep(3);
