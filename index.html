@@ -1553,13 +1553,13 @@
         <!-- STEP 1: SERVICE & DURATION & CUSTOMIZATION -->
         <div class="booking-step-content active" id="bookingStep1">
           <div class="step-heading">
-            <h3>Step 1: Select Therapy & Preferences</h3>
-            <p>Customize your massage style, duration, and aromatics.</p>
+            <h3>Step 1: Select Therapy</h3>
+            <p>Choose your preferred massage and duration.</p>
           </div>
 
           <form id="bookingFormStep1">
             <!-- Select Therapy Cards -->
-            <label class="form-label-bold"><i class="fa-solid fa-spa"></i> Choose Therapy:</label>
+            <label class="form-label-bold"><i class="fa-solid fa-spa"></i> Select Therapy:</label>
             <div class="therapy-select-grid">
               <label class="therapy-radio-card">
                 <input type="radio" name="modalTherapy" value="swedish" data-price="1499" checked />
@@ -1568,7 +1568,7 @@
                     <span class="therapy-name">Swedish Relaxation</span>
                     <span class="therapy-price">₹1,499</span>
                   </div>
-                  <span class="therapy-sub">Gentle, soothing full-body strokes</span>
+                  <span class="therapy-sub">Gentle full-body relaxation</span>
                 </div>
               </label>
 
@@ -1579,7 +1579,7 @@
                     <span class="therapy-name">Deep Tissue Massage</span>
                     <span class="therapy-price">₹1,699</span>
                   </div>
-                  <span class="therapy-sub">Firm pressure for tight muscles & knots</span>
+                  <span class="therapy-sub">Firm pressure for tight muscles</span>
                 </div>
               </label>
 
@@ -1590,7 +1590,7 @@
                     <span class="therapy-name">Aromatherapy Sensory</span>
                     <span class="therapy-price">₹1,599</span>
                   </div>
-                  <span class="therapy-sub">Botanical oils for deep sleep & calm</span>
+                  <span class="therapy-sub">Botanical oils for deep calm</span>
                 </div>
               </label>
 
@@ -1601,7 +1601,7 @@
                     <span class="therapy-name">Back & Neck Relief</span>
                     <span class="therapy-price">₹1,199</span>
                   </div>
-                  <span class="therapy-sub">Targeted upper body acupressure</span>
+                  <span class="therapy-sub">Targeted upper body relief</span>
                 </div>
               </label>
 
@@ -1612,7 +1612,7 @@
                     <span class="therapy-name">Hot Stone & Herbal</span>
                     <span class="therapy-price">₹2,199</span>
                   </div>
-                  <span class="therapy-sub">Warm basalt stones & herbal poultice</span>
+                  <span class="therapy-sub">Warm basalt stones therapy</span>
                 </div>
               </label>
 
@@ -1623,14 +1623,14 @@
                     <span class="therapy-name">Reflexology Foot Spa</span>
                     <span class="therapy-price">₹999</span>
                   </div>
-                  <span class="therapy-sub">Calf & sole restorative pressure</span>
+                  <span class="therapy-sub">Restorative foot & calf massage</span>
                 </div>
               </label>
             </div>
 
             <!-- Duration Selection -->
             <div class="form-group-spaced">
-              <label class="form-label-bold"><i class="fa-regular fa-clock"></i> Select Session Duration:</label>
+              <label class="form-label-bold"><i class="fa-regular fa-clock"></i> Duration:</label>
               <div class="duration-pill-group">
                 <label class="duration-pill-option">
                   <input type="radio" name="modalDuration" value="60" checked />
@@ -1650,31 +1650,28 @@
             <!-- Pressure & Scent Preference -->
             <div class="form-row-two">
               <div class="form-group">
-                <label class="form-label-bold" for="pressurePref"><i class="fa-solid fa-hand-sparkles"></i> Pressure
-                  Level:</label>
+                <label class="form-label-bold" for="pressurePref"><i class="fa-solid fa-hand-sparkles"></i> Pressure:</label>
                 <select id="pressurePref" class="form-control-luxury">
                   <option value="soft">Soft & Gentle</option>
                   <option value="medium" selected>Medium Balanced</option>
                   <option value="firm">Firm & Deep</option>
-                  <option value="custom">Custom (Specify to therapist)</option>
+                  <option value="custom">Custom</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label-bold" for="oilPref"><i class="fa-solid fa-droplet"></i> Aromatherapy
-                  Oil:</label>
+                <label class="form-label-bold" for="oilPref"><i class="fa-solid fa-droplet"></i> Aroma Oil:</label>
                 <select id="oilPref" class="form-control-luxury">
-                  <option value="french-lavender" selected>French Lavender (Deep Sleep)</option>
-                  <option value="mysore-sandalwood">Mysore Sandalwood (Grounding)</option>
-                  <option value="eucalyptus-mint">Eucalyptus Mint (Decongesting)</option>
-                  <option value="organic-jojoba">Unscented Pure Organic Jojoba</option>
+                  <option value="french-lavender" selected>French Lavender</option>
+                  <option value="mysore-sandalwood">Mysore Sandalwood</option>
+                  <option value="eucalyptus-mint">Eucalyptus Mint</option>
+                  <option value="organic-jojoba">Unscented Pure Jojoba</option>
                 </select>
               </div>
             </div>
 
             <!-- Optional Add-ons -->
             <div class="form-group-spaced">
-              <label class="form-label-bold"><i class="fa-solid fa-plus-circle"></i> Enhance Your Session
-                (Optional):</label>
+              <label class="form-label-bold"><i class="fa-solid fa-plus-circle"></i> Add-ons (Optional):</label>
               <div class="addons-grid">
                 <label class="addon-checkbox-label">
                   <input type="checkbox" name="addonHotStones" value="499" />
@@ -1682,11 +1679,11 @@
                 </label>
                 <label class="addon-checkbox-label">
                   <input type="checkbox" name="addonScalp" value="399" />
-                  <span>Nourishing Scalp Therapy (+₹399)</span>
+                  <span>Nourishing Scalp (+₹399)</span>
                 </label>
                 <label class="addon-checkbox-label">
                   <input type="checkbox" name="addonFootScrub" value="399" />
-                  <span>Organic Sea Salt Foot Scrub (+₹399)</span>
+                  <span>Sea Salt Foot Scrub (+₹399)</span>
                 </label>
               </div>
             </div>
@@ -1694,11 +1691,11 @@
             <!-- Step 1 Footer Summary & Next -->
             <div class="step-action-bar">
               <div class="step-price-preview">
-                <span class="preview-label">Estimated Total:</span>
+                <span class="preview-label">Total:</span>
                 <span class="preview-amount" id="step1PricePreview">₹1,499</span>
               </div>
               <button type="button" class="btn btn-gold" id="goToStep2Btn">
-                <span>Next: Choose Slot & Address</span>
+                <span>Next: Date & Location</span>
                 <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
@@ -1708,24 +1705,22 @@
         <!-- STEP 2: DATE & TIME SLOT + ADDRESS & NOTES -->
         <div class="booking-step-content" id="bookingStep2">
           <div class="step-heading">
-            <h3>Step 2: Choose 24/7 Slot & Service Location</h3>
-            <p>Our mobile therapists are available 24 hours round the clock.</p>
+            <h3>Step 2: Date & Address</h3>
+            <p>24/7 Doorstep Service Available</p>
           </div>
 
           <form id="bookingFormStep2">
             <!-- Date & Time Slot Grid -->
             <div class="form-row-two">
               <div class="form-group">
-                <label class="form-label-bold" for="bookingDate"><i class="fa-regular fa-calendar"></i> Appointment
-                  Date:</label>
+                <label class="form-label-bold" for="bookingDate"><i class="fa-regular fa-calendar"></i> Date:</label>
                 <input type="date" id="bookingDate" class="form-control-luxury" required />
               </div>
               <div class="form-group">
-                <label class="form-label-bold" for="bookingTimeSlot"><i class="fa-regular fa-clock"></i> 24/7 Time
-                  Slot:</label>
+                <label class="form-label-bold" for="bookingTimeSlot"><i class="fa-regular fa-clock"></i> Time Slot:</label>
                 <select id="bookingTimeSlot" class="form-control-luxury" required>
-                  <option value="now">⚡ ASAP Dispatch (Next 45-60 Mins)</option>
-                  <optgroup label="Late Night & Midnight (24/7)">
+                  <option value="now">⚡ ASAP (Next 45-60 Mins)</option>
+                  <optgroup label="Late Night (24/7)">
                     <option value="22:00">10:00 PM - 11:00 PM</option>
                     <option value="23:00">11:00 PM - 12:00 AM</option>
                     <option value="00:00">12:00 AM - 01:00 AM</option>
@@ -1749,30 +1744,27 @@
 
             <!-- Address Fields -->
             <div class="form-group">
-              <label class="form-label-bold" for="clientAddress"><i class="fa-solid fa-house"></i> Home Address (Street
-                & Building):</label>
+              <label class="form-label-bold" for="clientAddress"><i class="fa-solid fa-house"></i> Address (House / Flat No):</label>
               <input type="text" id="clientAddress" class="form-control-luxury"
-                placeholder="e.g. 742 Evergreen Terrace, Apt 4B" required />
+                placeholder="Flat / House No, Street, Area" required />
             </div>
 
             <div class="form-row-two">
               <div class="form-group">
                 <label class="form-label-bold" for="clientCity"><i class="fa-solid fa-city"></i> City / Area:</label>
-                <input type="text" id="clientCity" class="form-control-luxury" placeholder="City or Neighborhood"
+                <input type="text" id="clientCity" class="form-control-luxury" placeholder="City or Landmark"
                   required />
               </div>
               <div class="form-group">
-                <label class="form-label-bold" for="clientZip"><i class="fa-solid fa-map-pin"></i> Zip / Postal
-                  Code:</label>
-                <input type="text" id="clientZip" class="form-control-luxury" placeholder="Postal Code" />
+                <label class="form-label-bold" for="clientZip"><i class="fa-solid fa-map-pin"></i> Pincode / Zip:</label>
+                <input type="text" id="clientZip" class="form-control-luxury" placeholder="Pincode" />
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label-bold" for="bookingNotes"><i class="fa-regular fa-comment-dots"></i> Special
-                Instructions for Therapist (Optional):</label>
+              <label class="form-label-bold" for="bookingNotes"><i class="fa-regular fa-comment-dots"></i> Special Notes (Optional):</label>
               <textarea id="bookingNotes" class="form-control-luxury textarea-short" rows="2"
-                placeholder="e.g., Gate entry code #1234, focus heavily on lower back and neck, quiet session..."></textarea>
+                placeholder="Any special requests or instructions for therapist..."></textarea>
             </div>
 
             <!-- Step 2 Navigation -->
@@ -1782,7 +1774,7 @@
                 <span>Back</span>
               </button>
               <button type="button" class="btn btn-gold" id="goToStep3Btn">
-                <span>Next: Client Details & OTP</span>
+                <span>Next: Verification</span>
                 <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
@@ -1792,21 +1784,19 @@
         <!-- STEP 3: CLIENT CONTACT & OTP VERIFICATION -->
         <div class="booking-step-content" id="bookingStep3">
           <div class="step-heading">
-            <h3>Step 3: Client Verification (Mandatory OTP)</h3>
-            <p>To ensure safety and prevent unverified bookings, we verify your phone number via a quick OTP code.</p>
+            <h3>Step 3: Verification & Contact</h3>
+            <p>Instant OTP verification for safe dispatch.</p>
           </div>
 
           <form id="bookingFormStep3">
             <div class="form-row-two">
               <div class="form-group">
-                <label class="form-label-bold" for="clientFullName"><i class="fa-regular fa-user"></i> Full
-                  Name:</label>
-                <input type="text" id="clientFullName" class="form-control-luxury" placeholder="Your full name"
+                <label class="form-label-bold" for="clientFullName"><i class="fa-regular fa-user"></i> Full Name:</label>
+                <input type="text" id="clientFullName" class="form-control-luxury" placeholder="Your Name"
                   required />
               </div>
               <div class="form-group">
-                <label class="form-label-bold" for="clientEmail"><i class="fa-regular fa-envelope"></i> Email Address
-                  (for receipt):</label>
+                <label class="form-label-bold" for="clientEmail"><i class="fa-regular fa-envelope"></i> Email (for receipt):</label>
                 <input type="email" id="clientEmail" class="form-control-luxury" placeholder="name@domain.com"
                   required />
               </div>
@@ -1814,18 +1804,16 @@
 
             <!-- Phone Number & Send OTP -->
             <div class="form-group">
-              <label class="form-label-bold" for="clientPhone"><i class="fa-solid fa-phone"></i> Mobile Phone Number
-                (SMS / WhatsApp):</label>
+              <label class="form-label-bold" for="clientPhone"><i class="fa-solid fa-phone"></i> Phone Number:</label>
               <div class="phone-input-group">
                 <span class="phone-prefix">+91</span>
-                <input type="tel" id="clientPhone" class="form-control-luxury phone-field" placeholder="98765 43210"
+                <input type="tel" id="clientPhone" class="form-control-luxury phone-field" placeholder="70901 20211"
                   required />
                 <button type="button" class="btn btn-gold btn-send-otp" id="sendOtpBtn">
-                  <span>Send OTP Code</span>
+                  <span>Send OTP</span>
                 </button>
               </div>
-              <small class="form-hint"><i class="fa-solid fa-shield-check"></i> Standard SMS rates may apply. A 4-digit
-                verification code will be sent instantly.</small>
+              <small class="form-hint"><i class="fa-solid fa-shield-check"></i> 4-digit verification code will be sent instantly.</small>
             </div>
 
             <!-- OTP Input Section (Appears after Send OTP) -->
