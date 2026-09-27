@@ -3213,14 +3213,35 @@ body.modal-open, html.modal-open {
     min-height: 48px;
   }
 
-  /* How It Works on Mobile */
+  /* ==========================================================================
+     HOW IT WORKS (EFFORTLESS) CAROUSEL (SCROLL MEIN)
+     ========================================================================== */
   .steps-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 16px !important;
+    padding: 6px 4px 22px !important;
+    margin-bottom: 24px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    scroll-behavior: smooth !important;
   }
 
-  .step-card {
-    padding: 24px 18px;
+  .steps-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .steps-grid .step-card {
+    flex: 0 0 85vw !important;
+    max-width: 320px !important;
+    min-width: 275px !important;
+    scroll-snap-align: center !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 24px 18px !important;
   }
 
   .how-bottom-callout {
