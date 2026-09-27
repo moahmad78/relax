@@ -662,6 +662,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ==========================================
+  // 8.1 BACKEND INQUIRY EMAIL DISPATCH (sahilalimail17@gmail.com)
+  // ==========================================
+  const BACKEND_INQUIRY_EMAIL = 'sahilalimail17@gmail.com';
+
+  async function sendBackendEmailInquiry(inquiryData) {
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${BACKEND_INQUIRY_EMAIL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `New 24/7 Massage Booking Inquiry: ${inquiryData.service || inquiryData.therapyName || 'Session'} [Ref: ${inquiryData.ref || 'Direct'}]`,
+          _template: 'table',
+          _captcha: 'false',
+          'Booking Reference': inquiryData.ref || 'N/A',
+          'Client Name': inquiryData.name || 'Not Provided',
+          'Phone Number': inquiryData.phone || 'Not Provided',
+          'Email Address': inquiryData.email || 'Not Provided',
+          'Massage Therapy': inquiryData.service || inquiryData.therapyName || 'N/A',
+          'Duration': `${inquiryData.duration || 60} Minutes`,
+          'Appointment Date': inquiryData.date || 'Today',
+          'Time Slot': inquiryData.timeSlot || 'Express 45m Dispatch',
+          'Home Address': inquiryData.address || 'N/A',
+          'City / Neighborhood': inquiryData.city || 'N/A',
+          'Postal Code': inquiryData.zip || 'N/A',
+          'Pressure Preference': inquiryData.pressure || 'Medium Balanced',
+          'Aromatherapy Oil': inquiryData.oil || 'French Lavender',
+          'Special Instructions': inquiryData.notes || 'None',
+          'Estimated Total': inquiryData.total ? `₹${inquiryData.total}` : 'N/A',
+          'Submission Time': new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+        })
+      });
+      const result = await response.json();
+      console.log('Inquiry successfully delivered to backend email:', result);
+      return result;
+    } catch (err) {
+      console.warn('Backend inquiry transmission notice:', err);
+    }
+  }
+
   // Verify OTP & Confirm Booking
   function verifyAndConfirmBooking() {
     if (!bookingState.otpSent) {
@@ -695,6 +738,25 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const totalPrice = updatePriceCalculation();
       document.getElementById('confirmTotal').textContent = `₹${totalPrice.toLocaleString('en-IN')} (All-Inclusive • Zero Travel Surcharge)`;
+
+      // Dispatch inquiry to sahilalimail17@gmail.com
+      sendBackendEmailInquiry({
+        ref: ref,
+        name: bookingState.clientName,
+        phone: bookingState.clientPhone,
+        email: bookingState.clientEmail,
+        service: bookingState.therapyName,
+        duration: bookingState.duration,
+        date: bookingState.date,
+        timeSlot: bookingState.timeSlot,
+        address: bookingState.address,
+        city: bookingState.city,
+        zip: document.getElementById('clientZip') ? document.getElementById('clientZip').value : '',
+        pressure: bookingState.pressure,
+        oil: bookingState.oil,
+        notes: bookingState.notes,
+        total: totalPrice
+      });
 
       // WhatsApp notification link for client
       const waMsg = encodeURIComponent(`Hello RELAX Wellness Concierge! My booking is confirmed. Ref: ${ref} for ${bookingState.therapyName} (${bookingState.duration} mins). Looking forward to the session!`);
