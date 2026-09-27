@@ -577,109 +577,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const otpDigits = document.querySelectorAll('.otp-digit');
   const verifyAndConfirmBtn = document.getElementById('verifyAndConfirmBookingBtn');
   const resendOtpBtn = document.getElementById('resendOtpBtn');
-  const otpTimerText = document.getElementById('otpTimerText');
-  const otpTimerSpan = document.getElementById('otpTimer');
-
-  let otpTimerInterval = null;
-
-  function generateRandomOtp() {
-    const code = Math.floor(1000 + Math.random() * 9000).toString();
-    bookingState.generatedOtp = code;
-    return code;
-  }
-
-  function startOtpCountdown(seconds = 45) {
-    clearInterval(otpTimerInterval);
-    let timeLeft = seconds;
-    resendOtpBtn.style.display = 'none';
-    otpTimerText.style.display = 'inline';
-    otpTimerSpan.textContent = `${timeLeft}s`;
-
-    otpTimerInterval = setInterval(() => {
-      timeLeft--;
-      if (timeLeft <= 0) {
-        clearInterval(otpTimerInterval);
-        otpTimerText.style.display = 'none';
-        resendOtpBtn.style.display = 'inline';
-      } else {
-        otpTimerSpan.textContent = `${timeLeft}s`;
-      }
-    }, 1000);
-  }
-
-  if (sendOtpBtn) {
-    sendOtpBtn.addEventListener('click', () => {
-      const phone = document.getElementById('clientPhone').value.trim();
-      const name = document.getElementById('clientFullName').value.trim();
-      const email = document.getElementById('clientEmail').value.trim();
-
-      if (!name) {
-        showToast('Please enter your full name.', 'warning');
-        document.getElementById('clientFullName').focus();
-        return;
-      }
-      if (!phone || phone.length < 7) {
-        showToast('Please enter a valid mobile number for SMS OTP.', 'warning');
-        document.getElementById('clientPhone').focus();
-        return;
-      }
-
-      bookingState.clientName = name;
-      bookingState.clientEmail = email || 'client@relax.com';
-      bookingState.clientPhone = phone;
-
-      const code = generateRandomOtp();
-      demoCodeDisplay.textContent = code;
-      otpTargetPhone.textContent = `+91 ${phone}`;
-
-      otpBox.style.display = 'block';
-      bookingState.otpSent = true;
-
-      // Auto fill demo code smoothly or let user type
-      otpDigits.forEach(d => d.value = '');
-      otpDigits[0].focus();
-
-      startOtpCountdown(45);
-      showToast(`📲 Verification OTP sent to +91 ${phone}! (Code: ${code})`, 'success');
-    });
-  }
-
-  if (resendOtpBtn) {
-    resendOtpBtn.addEventListener('click', () => {
-      const code = generateRandomOtp();
-      demoCodeDisplay.textContent = code;
-      startOtpCountdown(45);
-      showToast(`🔄 New OTP code sent: ${code}`, 'success');
-    });
-  }
-
-  // Handle multi-digit OTP inputs
-  otpDigits.forEach((digit, idx) => {
-    digit.addEventListener('input', (e) => {
-      const val = e.target.value;
-      if (val.length === 1 && idx < otpDigits.length - 1) {
-        otpDigits[idx + 1].focus();
-      }
-    });
-
-    digit.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !digit.value && idx > 0) {
-        otpDigits[idx - 1].focus();
-      }
-    });
-
-    digit.addEventListener('paste', (e) => {
-      e.preventDefault();
-      const pastedData = (e.clipboardData || window.clipboardData).getData('text').trim();
-      if (pastedData.length >= 4) {
-        for (let i = 0; i < 4; i++) {
-          if (otpDigits[i]) otpDigits[i].value = pastedData[i];
-        }
-        verifyAndConfirmBooking();
-      }
-    });
-  });
-
   // ==========================================
   // 8.1 BACKEND INQUIRY EMAIL DISPATCH (sahilalimail17@gmail.com)
   // ==========================================
@@ -723,75 +620,84 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Verify OTP & Confirm Booking
-  function verifyAndConfirmBooking() {
-    if (!bookingState.otpSent) {
-      showToast('Please click "Send OTP Code" first to verify your phone.', 'warning');
+  // Confirm & Book Directly (Without OTP)
+  function confirmDirectBooking() {
+    const nameInput = document.getElementById('clientFullName');
+    const phoneInput = document.getElementById('clientPhone');
+    const emailInput = document.getElementById('clientEmail');
+
+    const name = nameInput ? nameInput.value.trim() : '';
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+
+    if (!name) {
+      showToast('Please enter your full name.', 'warning');
+      if (nameInput) nameInput.focus();
       return;
     }
 
-    let enteredCode = '';
-    otpDigits.forEach(d => enteredCode += d.value.trim());
-
-    if (enteredCode.length !== 4) {
-      showToast('Please enter the complete 4-digit OTP verification code.', 'warning');
+    if (!phone || phone.length < 7) {
+      showToast('Please enter your mobile phone number.', 'warning');
+      if (phoneInput) phoneInput.focus();
       return;
     }
 
-    // Check code or allow demo verification
-    if (enteredCode === bookingState.generatedOtp || enteredCode === '7842') {
-      bookingState.otpVerified = true;
-      clearInterval(otpTimerInterval);
+    bookingState.clientName = name;
+    bookingState.clientEmail = email || 'client@relax.com';
+    bookingState.clientPhone = phone;
 
-      // Generate Reference
-      const ref = `RLX-${Math.floor(10000 + Math.random() * 90000)}`;
-      bookingState.refId = ref;
+    // Generate Reference
+    const ref = `RLX-${Math.floor(10000 + Math.random() * 90000)}`;
+    bookingState.refId = ref;
 
-      // Populate Step 4 Confirmation Card
-      document.getElementById('confirmRef').textContent = ref;
-      document.getElementById('confirmName').textContent = bookingState.clientName;
-      document.getElementById('confirmService').textContent = `${bookingState.therapyName} (${bookingState.duration} Mins)`;
-      document.getElementById('confirmSlot').textContent = `${bookingState.date || 'Today'} • ${bookingState.timeSlot === 'now' ? 'Express 45m Dispatch' : bookingState.timeSlot}`;
-      document.getElementById('confirmAddress').textContent = `${bookingState.address}, ${bookingState.city}`;
-      
-      const totalPrice = updatePriceCalculation();
-      document.getElementById('confirmTotal').textContent = `₹${totalPrice.toLocaleString('en-IN')} (All-Inclusive • Zero Travel Surcharge)`;
+    // Populate Step 4 Confirmation Card
+    const confirmRef = document.getElementById('confirmRef');
+    if (confirmRef) confirmRef.textContent = ref;
+    const confirmName = document.getElementById('confirmName');
+    if (confirmName) confirmName.textContent = bookingState.clientName;
+    const confirmService = document.getElementById('confirmService');
+    if (confirmService) confirmService.textContent = `${bookingState.therapyName} (${bookingState.duration} Mins)`;
+    const confirmSlot = document.getElementById('confirmSlot');
+    if (confirmSlot) confirmSlot.textContent = `${bookingState.date || 'Today'} • ${bookingState.timeSlot === 'now' ? 'Express 45m Dispatch' : bookingState.timeSlot}`;
+    const confirmAddress = document.getElementById('confirmAddress');
+    if (confirmAddress) confirmAddress.textContent = `${bookingState.address}, ${bookingState.city}`;
+    
+    const totalPrice = updatePriceCalculation();
+    const confirmTotal = document.getElementById('confirmTotal');
+    if (confirmTotal) confirmTotal.textContent = `₹${totalPrice.toLocaleString('en-IN')} (All-Inclusive • Zero Travel Surcharge)`;
 
-      // Dispatch inquiry to sahilalimail17@gmail.com
-      sendBackendEmailInquiry({
-        ref: ref,
-        name: bookingState.clientName,
-        phone: bookingState.clientPhone,
-        email: bookingState.clientEmail,
-        service: bookingState.therapyName,
-        duration: bookingState.duration,
-        date: bookingState.date,
-        timeSlot: bookingState.timeSlot,
-        address: bookingState.address,
-        city: bookingState.city,
-        zip: document.getElementById('clientZip') ? document.getElementById('clientZip').value : '',
-        pressure: bookingState.pressure,
-        oil: bookingState.oil,
-        notes: bookingState.notes,
-        total: totalPrice
-      });
+    // Dispatch inquiry to sahilalimail17@gmail.com
+    sendBackendEmailInquiry({
+      ref: ref,
+      name: bookingState.clientName,
+      phone: bookingState.clientPhone,
+      email: bookingState.clientEmail,
+      service: bookingState.therapyName,
+      duration: bookingState.duration,
+      date: bookingState.date,
+      timeSlot: bookingState.timeSlot,
+      address: bookingState.address,
+      city: bookingState.city,
+      zip: document.getElementById('clientZip') ? document.getElementById('clientZip').value : '',
+      pressure: bookingState.pressure,
+      oil: bookingState.oil,
+      notes: bookingState.notes,
+      total: totalPrice
+    });
 
-      // WhatsApp notification link for client
-      const waMsg = encodeURIComponent(`Hello RELAX Wellness Concierge! My booking is confirmed. Ref: ${ref} for ${bookingState.therapyName} (${bookingState.duration} mins). Looking forward to the session!`);
-      const waLink = document.getElementById('confirmWaChatLink');
-      if (waLink) {
-        waLink.href = `https://wa.me/917090120211?text=${waMsg}`;
-      }
-
-      goToStep(4);
-      showToast(`🎉 Booking Verified & Confirmed! Reference: ${ref}`, 'success');
-    } else {
-      showToast('Incorrect OTP code. Please check and try again.', 'error');
+    // WhatsApp notification link for client
+    const waMsg = encodeURIComponent(`Hello RELAX Wellness Concierge! My booking is confirmed. Ref: ${ref} for ${bookingState.therapyName} (${bookingState.duration} mins). Looking forward to the session!`);
+    const waLink = document.getElementById('confirmWaChatLink');
+    if (waLink) {
+      waLink.href = `https://wa.me/917090120211?text=${waMsg}`;
     }
+
+    goToStep(4);
+    showToast(`🎉 Booking Confirmed! Reference: ${ref}`, 'success');
   }
 
   if (verifyAndConfirmBtn) {
-    verifyAndConfirmBtn.addEventListener('click', verifyAndConfirmBooking);
+    verifyAndConfirmBtn.addEventListener('click', confirmDirectBooking);
   }
 
   // ==========================================

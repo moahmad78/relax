@@ -1539,7 +1539,7 @@
         <div class="step-line"></div>
         <div class="step-indicator" data-step="3">
           <span class="step-num">3</span>
-          <span class="step-name">OTP Verification</span>
+          <span class="step-name">Details</span>
         </div>
         <div class="step-line"></div>
         <div class="step-indicator" data-step="4">
@@ -1781,11 +1781,11 @@
           </form>
         </div>
 
-        <!-- STEP 3: CLIENT CONTACT & OTP VERIFICATION -->
+        <!-- STEP 3: CLIENT CONTACT & CONFIRMATION -->
         <div class="booking-step-content" id="bookingStep3">
           <div class="step-heading">
-            <h3>Step 3: Verification & Contact</h3>
-            <p>Instant OTP verification for safe dispatch.</p>
+            <h3>Step 3: Contact Details</h3>
+            <p>Enter your details to confirm instant 24/7 doorstep dispatch.</p>
           </div>
 
           <form id="bookingFormStep3">
@@ -1797,48 +1797,19 @@
               </div>
               <div class="form-group">
                 <label class="form-label-bold" for="clientEmail"><i class="fa-regular fa-envelope"></i> Email (for receipt):</label>
-                <input type="email" id="clientEmail" class="form-control-luxury" placeholder="name@domain.com"
-                  required />
+                <input type="email" id="clientEmail" class="form-control-luxury" placeholder="name@domain.com" />
               </div>
             </div>
 
-            <!-- Phone Number & Send OTP -->
+            <!-- Phone Number -->
             <div class="form-group">
-              <label class="form-label-bold" for="clientPhone"><i class="fa-solid fa-phone"></i> Phone Number:</label>
+              <label class="form-label-bold" for="clientPhone"><i class="fa-solid fa-phone"></i> Mobile Phone Number:</label>
               <div class="phone-input-group">
                 <span class="phone-prefix">+91</span>
-                <input type="tel" id="clientPhone" class="form-control-luxury phone-field" placeholder="70901 20211"
+                <input type="tel" id="clientPhone" class="form-control-luxury phone-field" placeholder="98765 43210"
                   required />
-                <button type="button" class="btn btn-gold btn-send-otp" id="sendOtpBtn">
-                  <span>Send OTP</span>
-                </button>
               </div>
-              <small class="form-hint"><i class="fa-solid fa-shield-check"></i> 4-digit verification code will be sent instantly.</small>
-            </div>
-
-            <!-- OTP Input Section (Appears after Send OTP) -->
-            <div class="otp-verification-box" id="otpBox" style="display: none;">
-              <div class="otp-box-header">
-                <i class="fa-solid fa-shield-halved gold-text"></i>
-                <div>
-                  <h4>Enter 4-Digit Verification Code</h4>
-                  <p>Sent to <span id="otpTargetPhone" class="highlight-phone">+91 98765 43210</span>. (Demo code:
-                    <strong id="demoCodeDisplay" class="gold-text">7842</strong>)</p>
-                </div>
-              </div>
-
-              <div class="otp-inputs-row" id="otpInputsRow">
-                <input type="text" maxlength="1" class="otp-digit" data-idx="0" inputmode="numeric" />
-                <input type="text" maxlength="1" class="otp-digit" data-idx="1" inputmode="numeric" />
-                <input type="text" maxlength="1" class="otp-digit" data-idx="2" inputmode="numeric" />
-                <input type="text" maxlength="1" class="otp-digit" data-idx="3" inputmode="numeric" />
-              </div>
-
-              <div class="otp-resend-row">
-                <span id="otpTimerText">Resend code in <strong id="otpTimer">45s</strong></span>
-                <button type="button" class="btn-link-gold" id="resendOtpBtn" style="display: none;">Resend OTP
-                  Now</button>
-              </div>
+              <small class="form-hint"><i class="fa-solid fa-shield-check"></i> Booking confirmation & therapist dispatch alerts will be sent via SMS / WhatsApp.</small>
             </div>
 
             <!-- Step 3 Navigation -->
@@ -1848,8 +1819,8 @@
                 <span>Back</span>
               </button>
               <button type="button" class="btn btn-gold btn-glow" id="verifyAndConfirmBookingBtn">
-                <i class="fa-solid fa-check-double"></i>
-                <span>Verify OTP & Confirm Booking</span>
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Confirm & Book 24/7 Session</span>
               </button>
             </div>
           </form>
