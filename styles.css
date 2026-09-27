@@ -795,32 +795,11 @@ h1, h2, h3, h4, h5, h6 {
 .hero-section {
   position: relative;
   min-height: calc(100vh - 105px);
-  background-color: var(--color-charcoal-dark);
+  background: url('assets/hero_spa.jpg') center center/cover no-repeat;
   display: flex;
   align-items: center;
   padding: 24px 0 32px;
   overflow: hidden;
-}
-
-.hero-video-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-bg-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .hero-bg-overlay {
@@ -831,7 +810,6 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   background: var(--grad-hero-overlay);
   z-index: 1;
-  pointer-events: none;
 }
 
 .hero-container {
