@@ -518,35 +518,43 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-charcoal-primary);
 }
 
-.spa-sounds-menu-dropdown {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  width: 360px;
-  background: #ffffff;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 20px 40px -10px rgba(44, 38, 34, 0.18), 0 0 0 1px rgba(199, 178, 153, 0.35);
-  padding: 16px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 1050;
-  pointer-events: none;
-}
-
-.nav-item-dropdown:hover .spa-sounds-menu-dropdown,
-.nav-item-dropdown.active .spa-sounds-menu-dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
-}
-
 .dropdown-sound-header {
   padding-bottom: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--color-border-subtle);
+}
+
+@media (min-width: 992px) {
+  .nav-item-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .spa-sounds-menu-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: 360px;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px -10px rgba(44, 38, 34, 0.18), 0 0 0 1px rgba(199, 178, 153, 0.35);
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1050;
+    pointer-events: none;
+  }
+
+  .nav-item-dropdown:hover .spa-sounds-menu-dropdown,
+  .nav-item-dropdown.active .spa-sounds-menu-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
 }
 
 .sound-menu-title {
@@ -3098,7 +3106,8 @@ body.modal-open, html.modal-open {
   .nav-item-dropdown {
     width: 100%;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    box-sizing: border-box;
   }
 
   .nav-dropdown-toggle {
@@ -3108,30 +3117,46 @@ body.modal-open, html.modal-open {
     padding: 12px 0;
     min-height: 48px;
     border-bottom: 1px solid var(--color-border-subtle);
+    box-sizing: border-box;
   }
 
   .spa-sounds-menu-dropdown {
-    position: static;
-    transform: none;
-    width: 100%;
-    max-width: 100%;
-    box-shadow: none;
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
     border: 1px solid rgba(199, 178, 153, 0.35);
     background: #FAF7F2;
-    margin: 8px 0 12px;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+    margin: 10px 0 14px 0 !important;
+    padding: 14px 12px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
     display: none;
+    border-radius: var(--radius-md);
   }
 
   .nav-item-dropdown.mobile-open .spa-sounds-menu-dropdown {
-    display: block;
+    display: block !important;
     animation: fadeInModal 0.2s ease;
   }
 
   .nav-item-dropdown.mobile-open .dropdown-arrow {
     transform: rotate(180deg);
+  }
+
+  .sound-item-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .sound-name, .sound-desc {
+    white-space: normal !important;
   }
 
   .mobile-toggle-btn {
