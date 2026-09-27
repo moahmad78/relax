@@ -536,47 +536,6 @@ document.addEventListener('DOMContentLoaded', () => {
     backToStep1Btn.addEventListener('click', () => goToStep(1));
   }
 
-  // Step 2 -> Step 3
-  const goToStep3Btn = document.getElementById('goToStep3Btn');
-  if (goToStep3Btn) {
-    goToStep3Btn.addEventListener('click', () => {
-      const address = document.getElementById('clientAddress').value.trim();
-      const city = document.getElementById('clientCity').value.trim();
-      const date = document.getElementById('bookingDate').value;
-      const timeSlot = document.getElementById('bookingTimeSlot').value;
-
-      if (!address) {
-        showToast('Please enter your home address to continue.', 'warning');
-        document.getElementById('clientAddress').focus();
-        return;
-      }
-
-      bookingState.address = address;
-      bookingState.city = city || 'Downtown';
-      bookingState.date = date;
-      bookingState.timeSlot = timeSlot;
-      bookingState.notes = document.getElementById('bookingNotes').value.trim();
-
-      goToStep(3);
-    });
-  }
-
-  // Step 3 -> Step 2
-  const backToStep2Btn = document.getElementById('backToStep2Btn');
-  if (backToStep2Btn) {
-    backToStep2Btn.addEventListener('click', () => goToStep(2));
-  }
-
-  // ==========================================
-  // 8. MANDATORY CLIENT OTP VERIFICATION LOGIC
-  // ==========================================
-  const sendOtpBtn = document.getElementById('sendOtpBtn');
-  const otpBox = document.getElementById('otpBox');
-  const otpTargetPhone = document.getElementById('otpTargetPhone');
-  const demoCodeDisplay = document.getElementById('demoCodeDisplay');
-  const otpDigits = document.querySelectorAll('.otp-digit');
-  const verifyAndConfirmBtn = document.getElementById('verifyAndConfirmBookingBtn');
-  const resendOtpBtn = document.getElementById('resendOtpBtn');
   // ==========================================
   // 8.1 BACKEND INQUIRY EMAIL DISPATCH (sahilalimail17@gmail.com)
   // ==========================================
@@ -620,15 +579,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Confirm & Book Directly (Without OTP)
+  // Step 2: Confirm & Book (Directly transitions to Step 3 Confirmed!)
   function confirmDirectBooking() {
     const nameInput = document.getElementById('clientFullName');
     const phoneInput = document.getElementById('clientPhone');
     const emailInput = document.getElementById('clientEmail');
+    const addressInput = document.getElementById('clientAddress');
+    const cityInput = document.getElementById('clientCity');
+    const dateInput = document.getElementById('bookingDate');
+    const timeSlotInput = document.getElementById('bookingTimeSlot');
 
     const name = nameInput ? nameInput.value.trim() : '';
     const phone = phoneInput ? phoneInput.value.trim() : '';
     const email = emailInput ? emailInput.value.trim() : '';
+    const address = addressInput ? addressInput.value.trim() : '';
+    const city = cityInput ? cityInput.value.trim() : 'Local Area';
+    const date = dateInput ? dateInput.value : '';
+    const timeSlot = timeSlotInput ? timeSlotInput.value : 'now';
 
     if (!name) {
       showToast('Please enter your full name.', 'warning');
@@ -642,15 +609,26 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    if (!address) {
+      showToast('Please enter your home address to continue.', 'warning');
+      if (addressInput) addressInput.focus();
+      return;
+    }
+
     bookingState.clientName = name;
     bookingState.clientEmail = email || 'client@relax.com';
     bookingState.clientPhone = phone;
+    bookingState.address = address;
+    bookingState.city = city;
+    bookingState.date = date;
+    bookingState.timeSlot = timeSlot;
+    bookingState.notes = document.getElementById('bookingNotes') ? document.getElementById('bookingNotes').value.trim() : '';
 
     // Generate Reference
     const ref = `RLX-${Math.floor(10000 + Math.random() * 90000)}`;
     bookingState.refId = ref;
 
-    // Populate Step 4 Confirmation Card
+    // Populate Step 3 Confirmation Card
     const confirmRef = document.getElementById('confirmRef');
     if (confirmRef) confirmRef.textContent = ref;
     const confirmName = document.getElementById('confirmName');
@@ -692,10 +670,11 @@ document.addEventListener('DOMContentLoaded', () => {
       waLink.href = `https://wa.me/917090120211?text=${waMsg}`;
     }
 
-    goToStep(4);
+    goToStep(3);
     showToast(`🎉 Booking Confirmed! Reference: ${ref}`, 'success');
   }
 
+  const verifyAndConfirmBtn = document.getElementById('verifyAndConfirmBookingBtn');
   if (verifyAndConfirmBtn) {
     verifyAndConfirmBtn.addEventListener('click', confirmDirectBooking);
   }

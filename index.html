@@ -1525,25 +1525,20 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <!-- Multi-step Indicator -->
+      <!-- Multi-step Indicator (3 Steps) -->
       <div class="modal-steps-header">
         <div class="step-indicator active" data-step="1">
           <span class="step-num">1</span>
-          <span class="step-name">Service</span>
+          <span class="step-name">Therapy</span>
         </div>
         <div class="step-line"></div>
         <div class="step-indicator" data-step="2">
           <span class="step-num">2</span>
-          <span class="step-name">Slot & Address</span>
+          <span class="step-name">Details & Address</span>
         </div>
         <div class="step-line"></div>
         <div class="step-indicator" data-step="3">
           <span class="step-num">3</span>
-          <span class="step-name">Details</span>
-        </div>
-        <div class="step-line"></div>
-        <div class="step-indicator" data-step="4">
-          <span class="step-num">4</span>
           <span class="step-name">Confirmed</span>
         </div>
       </div>
@@ -1695,21 +1690,42 @@
                 <span class="preview-amount" id="step1PricePreview">₹1,499</span>
               </div>
               <button type="button" class="btn btn-gold" id="goToStep2Btn">
-                <span>Next: Date & Location</span>
+                <span>Next: Details & Address</span>
                 <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
           </form>
         </div>
 
-        <!-- STEP 2: DATE & TIME SLOT + ADDRESS & NOTES -->
+        <!-- STEP 2: DATE & TIME SLOT + ADDRESS + CLIENT DETAILS -->
         <div class="booking-step-content" id="bookingStep2">
           <div class="step-heading">
-            <h3>Step 2: Date & Address</h3>
+            <h3>Step 2: Details & Address</h3>
             <p>24/7 Doorstep Service Available</p>
           </div>
 
           <form id="bookingFormStep2">
+            <!-- Client Contact Info -->
+            <div class="form-row-two">
+              <div class="form-group">
+                <label class="form-label-bold" for="clientFullName"><i class="fa-regular fa-user"></i> Full Name:</label>
+                <input type="text" id="clientFullName" class="form-control-luxury" placeholder="Your Name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label-bold" for="clientPhone"><i class="fa-solid fa-phone"></i> Phone Number:</label>
+                <div class="phone-input-group">
+                  <span class="phone-prefix">+91</span>
+                  <input type="tel" id="clientPhone" class="form-control-luxury phone-field" placeholder="98765 43210" required />
+                </div>
+              </div>
+            </div>
+
+            <!-- Email (Optional) -->
+            <div class="form-group">
+              <label class="form-label-bold" for="clientEmail"><i class="fa-regular fa-envelope"></i> Email (for booking receipt):</label>
+              <input type="email" id="clientEmail" class="form-control-luxury" placeholder="name@domain.com" />
+            </div>
+
             <!-- Date & Time Slot Grid -->
             <div class="form-row-two">
               <div class="form-group">
@@ -1744,9 +1760,9 @@
 
             <!-- Address Fields -->
             <div class="form-group">
-              <label class="form-label-bold" for="clientAddress"><i class="fa-solid fa-house"></i> Address (House / Flat No):</label>
+              <label class="form-label-bold" for="clientAddress"><i class="fa-solid fa-house"></i> Address (House / Flat No, Street):</label>
               <input type="text" id="clientAddress" class="form-control-luxury"
-                placeholder="Flat / House No, Street, Area" required />
+                placeholder="Flat / House No, Street, Landmark" required />
             </div>
 
             <div class="form-row-two">
@@ -1764,57 +1780,12 @@
             <div class="form-group">
               <label class="form-label-bold" for="bookingNotes"><i class="fa-regular fa-comment-dots"></i> Special Notes (Optional):</label>
               <textarea id="bookingNotes" class="form-control-luxury textarea-short" rows="2"
-                placeholder="Any special requests or instructions for therapist..."></textarea>
+                placeholder="Any special requests or preferences..."></textarea>
             </div>
 
-            <!-- Step 2 Navigation -->
+            <!-- Step 2 Navigation (Direct Confirm) -->
             <div class="step-action-bar">
               <button type="button" class="btn btn-modal-back" id="backToStep1Btn">
-                <i class="fa-solid fa-arrow-left"></i>
-                <span>Back</span>
-              </button>
-              <button type="button" class="btn btn-gold" id="goToStep3Btn">
-                <span>Next: Verification</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <!-- STEP 3: CLIENT CONTACT & CONFIRMATION -->
-        <div class="booking-step-content" id="bookingStep3">
-          <div class="step-heading">
-            <h3>Step 3: Contact Details</h3>
-            <p>Enter your details to confirm instant 24/7 doorstep dispatch.</p>
-          </div>
-
-          <form id="bookingFormStep3">
-            <div class="form-row-two">
-              <div class="form-group">
-                <label class="form-label-bold" for="clientFullName"><i class="fa-regular fa-user"></i> Full Name:</label>
-                <input type="text" id="clientFullName" class="form-control-luxury" placeholder="Your Name"
-                  required />
-              </div>
-              <div class="form-group">
-                <label class="form-label-bold" for="clientEmail"><i class="fa-regular fa-envelope"></i> Email (for receipt):</label>
-                <input type="email" id="clientEmail" class="form-control-luxury" placeholder="name@domain.com" />
-              </div>
-            </div>
-
-            <!-- Phone Number -->
-            <div class="form-group">
-              <label class="form-label-bold" for="clientPhone"><i class="fa-solid fa-phone"></i> Mobile Phone Number:</label>
-              <div class="phone-input-group">
-                <span class="phone-prefix">+91</span>
-                <input type="tel" id="clientPhone" class="form-control-luxury phone-field" placeholder="98765 43210"
-                  required />
-              </div>
-              <small class="form-hint"><i class="fa-solid fa-shield-check"></i> Booking confirmation & therapist dispatch alerts will be sent via SMS / WhatsApp.</small>
-            </div>
-
-            <!-- Step 3 Navigation -->
-            <div class="step-action-bar">
-              <button type="button" class="btn btn-modal-back" id="backToStep2Btn">
                 <i class="fa-solid fa-arrow-left"></i>
                 <span>Back</span>
               </button>
@@ -1826,8 +1797,8 @@
           </form>
         </div>
 
-        <!-- STEP 4: BOOKING CONFIRMATION & REFERENCE -->
-        <div class="booking-step-content" id="bookingStep4">
+        <!-- STEP 3: BOOKING CONFIRMATION & REFERENCE -->
+        <div class="booking-step-content" id="bookingStep3">
           <div class="confirmation-card text-center">
             <div class="confirmation-icon-ring">
               <i class="fa-solid fa-check"></i>
