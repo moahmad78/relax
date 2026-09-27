@@ -795,11 +795,32 @@ h1, h2, h3, h4, h5, h6 {
 .hero-section {
   position: relative;
   min-height: calc(100vh - 105px);
-  background: url('assets/hero_spa.jpg') center center/cover no-repeat;
+  background-color: var(--color-charcoal-dark);
   display: flex;
   align-items: center;
   padding: 24px 0 32px;
   overflow: hidden;
+}
+
+.hero-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .hero-bg-overlay {
@@ -810,6 +831,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   background: var(--grad-hero-overlay);
   z-index: 1;
+  pointer-events: none;
 }
 
 .hero-container {
@@ -2219,20 +2241,23 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
 }
 
-/* Close button on light modal (Safety Charter Modal) */
-.safety-modal-dialog .modal-close-btn {
+/* Close button on light modals (Safety Charter, Privacy Policy, Terms of Service) */
+.safety-modal-dialog .modal-close-btn,
+.legal-modal-dialog .modal-close-btn {
   background: var(--color-charcoal-primary) !important;
   color: #ffffff !important;
   border: 1.5px solid var(--color-gold-primary) !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
-.safety-modal-dialog .modal-close-btn i {
+.safety-modal-dialog .modal-close-btn i,
+.legal-modal-dialog .modal-close-btn i {
   color: #ffffff !important;
 }
 
 .modal-close-btn:hover,
-.safety-modal-dialog .modal-close-btn:hover {
+.safety-modal-dialog .modal-close-btn:hover,
+.legal-modal-dialog .modal-close-btn:hover {
   background: var(--color-gold-primary) !important;
   color: var(--color-charcoal-dark) !important;
   border-color: var(--color-gold-primary) !important;
@@ -2240,7 +2265,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-close-btn:hover i,
-.safety-modal-dialog .modal-close-btn:hover i {
+.safety-modal-dialog .modal-close-btn:hover i,
+.legal-modal-dialog .modal-close-btn:hover i {
   color: var(--color-charcoal-dark) !important;
 }
 
@@ -3352,9 +3378,23 @@ body.modal-open, html.modal-open {
     line-height: 1.35;
   }
 
+  .top-announcement-bar {
+    padding: 5px 6px;
+    font-size: 0.72rem;
+  }
+
   .top-bar-inner {
     justify-content: center;
     text-align: center;
+  }
+
+  .live-status-pill {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.72rem;
+    gap: 6px;
+    justify-content: center;
   }
 
   .top-bar-contact {
@@ -3829,13 +3869,15 @@ body.modal-open, html.modal-open {
     font-size: 1.2rem;
   }
 
-  .safety-modal-dialog .modal-close-btn {
+  .safety-modal-dialog .modal-close-btn,
+  .legal-modal-dialog .modal-close-btn {
     background: var(--color-charcoal-primary) !important;
     color: #ffffff !important;
     border: 1.5px solid var(--color-gold-primary) !important;
   }
 
-  .safety-modal-dialog .modal-close-btn i {
+  .safety-modal-dialog .modal-close-btn i,
+  .legal-modal-dialog .modal-close-btn i {
     color: #ffffff !important;
   }
 

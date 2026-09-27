@@ -38,7 +38,7 @@
     <div class="container top-bar-inner">
       <div class="live-status-pill">
         <span class="pulse-dot"></span>
-        <span><strong>24/7 Active Dispatch:</strong> Therapists Available Now in Your Area</span>
+        <span><strong>24/7 Active:</strong> Therapists Available Now in Your Area</span>
       </div>
       <div class="top-bar-contact">
         <a href="tel:+919264920211" class="top-contact-link" id="topPhoneLink">
@@ -208,12 +208,18 @@
 
     <!-- SECTION 1: HERO SECTION -->
     <section class="hero-section" id="hero">
+      <div class="hero-video-container">
+        <video class="hero-bg-video" autoplay muted loop playsinline poster="assets/hero_spa.jpg">
+          <source src="assets/hero_spa.webm" type="video/webm">
+          <source src="assets/hero_spa.mp4" type="video/mp4">
+        </video>
+      </div>
       <div class="hero-bg-overlay"></div>
       <div class="container hero-container">
         <div class="hero-content">
           <div class="hero-badge animate-fade-in">
             <span class="badge-icon"><i class="fa-solid fa-sparkles"></i></span>
-            <span>100% Verified Male Therapists • Exclusively For Women • 24/7 In-Home Service</span>
+            <span>100% Verified Male Therapists • Exclusively For Women</span>
           </div>
 
           <h1 class="hero-title animate-fade-up">
@@ -329,11 +335,10 @@
       <div class="container">
         <div class="section-header text-center">
           <span class="section-eyebrow">The RELAX Standard</span>
-          <h2 class="section-title">Why Urban Women Choose Our In-Home Sanctuary</h2>
+          <h2 class="section-title">Why Women Choose Our In-Home Spa</h2>
           <div class="gold-divider"></div>
           <p class="section-lead">
-            We understand that your peace of mind is paramount. Every aspect of our 24/7 service is built around
-            uncompromising safety, verified professionalism, and serene luxury.
+            Uncompromising safety, verified male therapists, and serene luxury at your doorstep.
           </p>
         </div>
 
@@ -1980,6 +1985,84 @@
         <div class="charter-modal-action text-center">
           <button class="btn btn-gold" id="acknowledgeCharterBtn">
             <span>I Understand & Agree</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: PRIVACY POLICY -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="privacyPolicyModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog safety-modal-dialog legal-modal-dialog">
+      <button class="modal-close-btn" id="closePrivacyModalBtn" aria-label="Close privacy policy">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="safety-modal-content legal-modal-content">
+        <div class="safety-badge-top">
+          <i class="fa-solid fa-user-lock"></i> Strict Confidentiality
+        </div>
+        <h2>Privacy Policy & Client Data Protection</h2>
+        <div class="gold-divider"></div>
+
+        <div class="charter-body-text">
+          <h3>1. Zero Third-Party Data Sharing</h3>
+          <p>We respect your sacred personal space. Your name, phone number, booking history, and home address are stored under 256-bit SSL encryption and are NEVER sold, shared, or exposed to any third-party marketing companies.</p>
+
+          <h3>2. Discrete Arrival & Minimal Data Retention</h3>
+          <p>Our verified male therapists only receive navigation directions necessary to reach your doorstep for the confirmed appointment slot. Personal contact information remains masked and encrypted through our private concierge dispatch system.</p>
+
+          <h3>3. Right to Data Erasure</h3>
+          <p>You maintain complete control over your profile. At any time, you can request full deletion of your booking history and address records by reaching our 24/7 concierge at +91 92649 20211.</p>
+
+          <h3>4. Secure Payment & Booking Information</h3>
+          <p>All digital payments and transactions are processed through certified, PCI-DSS compliant banking gateways. We do not store credit card or banking credentials on our local servers.</p>
+        </div>
+
+        <div class="charter-modal-action text-center">
+          <button class="btn btn-gold" id="acknowledgePrivacyBtn">
+            <span>Got It, Close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: TERMS OF SERVICE -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="termsOfServiceModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-dialog safety-modal-dialog legal-modal-dialog">
+      <button class="modal-close-btn" id="closeTermsModalBtn" aria-label="Close terms of service">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="safety-modal-content legal-modal-content">
+        <div class="safety-badge-top">
+          <i class="fa-solid fa-scale-balanced"></i> Service Agreement
+        </div>
+        <h2>Terms of Service & Booking Guidelines</h2>
+        <div class="gold-divider"></div>
+
+        <div class="charter-body-text">
+          <h3>1. Exclusively Certified Therapeutic Massages</h3>
+          <p>RELAX provides premier wellness and restorative massage therapies exclusively for women by certified, background-verified male therapists. All sessions are 100% professional and strictly therapeutic in nature.</p>
+
+          <h3>2. Zero-Tolerance Safety Standard</h3>
+          <p>Any misconduct, inappropriate behavior, or boundary violation by either client or therapist results in instantaneous termination of the session with immediate dispatch security escalation.</p>
+
+          <h3>3. 24/7 On-Demand Appointments & Rescheduling</h3>
+          <p>Appointments can be booked 24 hours a day, 7 days a week. We offer complimentary door dispatch within 45–60 minutes. Rescheduling or cancellations can be easily made with at least 1-hour prior notice through our concierge helpline.</p>
+
+          <h3>4. Cleanliness & Equipment Preparation</h3>
+          <p>Our therapists arrive with fresh, single-use sanitized linens, premium organic essential oils, and therapeutic accessories. Clients are requested to provide a peaceful, clean space suitable for setting up the massage mat or table.</p>
+        </div>
+
+        <div class="charter-modal-action text-center">
+          <button class="btn btn-gold" id="acknowledgeTermsBtn">
+            <span>I Agree to Terms</span>
           </button>
         </div>
       </div>

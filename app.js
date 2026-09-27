@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 6. SAFETY CHARTER MODAL
+  // 6. SAFETY CHARTER & LEGAL MODALS
   // ==========================================
   const safetyCharterModal = document.getElementById('safetyCharterModal');
   const openSafetyCharterBtn = document.getElementById('openSafetyCharterModalBtn');
@@ -331,8 +331,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const ethicsCodeLink = document.getElementById('ethicsCodeLink');
 
   function openSafetyModal() {
-    safetyCharterModal.classList.add('active');
-    lockBodyScroll();
+    if (safetyCharterModal) {
+      safetyCharterModal.classList.add('active');
+      lockBodyScroll();
+    }
   }
 
   function closeSafetyModal() {
@@ -346,6 +348,54 @@ document.addEventListener('DOMContentLoaded', () => {
   if (ethicsCodeLink) ethicsCodeLink.addEventListener('click', (e) => { e.preventDefault(); openSafetyModal(); });
   if (closeSafetyCharterBtn) closeSafetyCharterBtn.addEventListener('click', closeSafetyModal);
   if (acknowledgeCharterBtn) acknowledgeCharterBtn.addEventListener('click', closeSafetyModal);
+
+  // Privacy Policy Modal
+  const privacyPolicyModal = document.getElementById('privacyPolicyModal');
+  const privacyPolicyLink = document.getElementById('privacyPolicyLink');
+  const closePrivacyModalBtn = document.getElementById('closePrivacyModalBtn');
+  const acknowledgePrivacyBtn = document.getElementById('acknowledgePrivacyBtn');
+
+  function openPrivacyModal() {
+    if (privacyPolicyModal) {
+      privacyPolicyModal.classList.add('active');
+      lockBodyScroll();
+    }
+  }
+
+  function closePrivacyModal() {
+    if (privacyPolicyModal) {
+      privacyPolicyModal.classList.remove('active');
+    }
+    unlockBodyScroll();
+  }
+
+  if (privacyPolicyLink) privacyPolicyLink.addEventListener('click', (e) => { e.preventDefault(); openPrivacyModal(); });
+  if (closePrivacyModalBtn) closePrivacyModalBtn.addEventListener('click', closePrivacyModal);
+  if (acknowledgePrivacyBtn) acknowledgePrivacyBtn.addEventListener('click', closePrivacyModal);
+
+  // Terms of Service Modal
+  const termsOfServiceModal = document.getElementById('termsOfServiceModal');
+  const termsOfServiceLink = document.getElementById('termsOfServiceLink');
+  const closeTermsModalBtn = document.getElementById('closeTermsModalBtn');
+  const acknowledgeTermsBtn = document.getElementById('acknowledgeTermsBtn');
+
+  function openTermsModal() {
+    if (termsOfServiceModal) {
+      termsOfServiceModal.classList.add('active');
+      lockBodyScroll();
+    }
+  }
+
+  function closeTermsModal() {
+    if (termsOfServiceModal) {
+      termsOfServiceModal.classList.remove('active');
+    }
+    unlockBodyScroll();
+  }
+
+  if (termsOfServiceLink) termsOfServiceLink.addEventListener('click', (e) => { e.preventDefault(); openTermsModal(); });
+  if (closeTermsModalBtn) closeTermsModalBtn.addEventListener('click', closeTermsModal);
+  if (acknowledgeTermsBtn) acknowledgeTermsBtn.addEventListener('click', closeTermsModal);
 
   // ==========================================
   // 7. MULTI-STEP BOOKING MODAL & OTP FLOW
