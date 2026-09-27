@@ -734,31 +734,51 @@ h1, h2, h3, h4, h5, h6 {
 .mobile-toggle-btn {
   display: none;
   flex-direction: column;
-  justify-content: space-around;
-  width: 28px;
-  height: 22px;
-  padding: 0;
-  z-index: 1001;
+  justify-content: center;
+  align-items: center;
+  gap: 5.5px;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  background: rgba(199, 178, 153, 0.15);
+  border: 1px solid rgba(199, 178, 153, 0.38);
+  cursor: pointer;
+  z-index: 1003;
+  transition: all var(--transition-fast);
+}
+
+.mobile-toggle-btn:hover {
+  background: rgba(199, 178, 153, 0.28);
+  border-color: var(--color-gold-primary);
 }
 
 .mobile-toggle-btn span {
-  width: 100%;
+  width: 22px;
   height: 2.2px;
   background-color: var(--color-charcoal-primary);
   border-radius: 4px;
-  transition: var(--transition-smooth);
+  transition: all var(--transition-smooth);
+}
+
+.mobile-toggle-btn.active {
+  background: rgba(199, 178, 153, 0.25);
+  border-color: var(--color-gold-primary);
 }
 
 .mobile-toggle-btn.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: translateY(7.7px) rotate(45deg);
 }
 
 .mobile-toggle-btn.active span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
 .mobile-toggle-btn.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: translateY(-7.7px) rotate(-45deg);
 }
 
 /* ==========================================================================
@@ -3116,14 +3136,6 @@ body.modal-open, html.modal-open {
 
   .mobile-toggle-btn {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-    background: transparent;
-    cursor: pointer;
   }
 
   .btn-header-book {
